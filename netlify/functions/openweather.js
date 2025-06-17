@@ -10,7 +10,13 @@ exports.handler = async function (event) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Missing endpoint parameter' }) };
   }
 
-  const allowedEndpoints = ['/data/2.5/weather', '/data/2.5/forecast', '/data/2.5/air_pollution'];
+const allowedEndpoints = [
+  '/data/2.5/weather',
+  '/data/2.5/forecast',
+  '/data/2.5/air_pollution',
+  '/geo/1.0/direct',  
+  '/geo/1.0/reverse'      
+];
   if (!allowedEndpoints.includes(endpoint)) {
     return { statusCode: 400, body: JSON.stringify({ error: 'Invalid endpoint' }) };
   }
