@@ -4,13 +4,18 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "vite",
+    "build": "vite build src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@material/web": "^2.3.0",
     "node-fetch": "^2.7.0"
+  },
+  "devDependencies": {
+    "vite": "^6.3.5"
   }
 }

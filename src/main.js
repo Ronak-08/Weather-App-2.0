@@ -1,3 +1,5 @@
+import '@material/web/all.js';
+
 const citySrc = document.getElementById("citySrc");
 const search = document.getElementById("search");
 const content = document.getElementById("mainContent");
