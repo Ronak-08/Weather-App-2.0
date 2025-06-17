@@ -399,7 +399,7 @@ async function showWeather(city, unit, forceRefresh = false) {
     alert("Please enter a city.");
     return;
   }
-  currentLastCity = city.trim();
+  let currentLastCity = city.trim();
   localStorage.setItem("lastCity", currentLastCity);
 
   try {
