@@ -151,27 +151,27 @@ function getBackgroundImage(iconCode) {
   const folder = (deviceType === 'tablet' || deviceType === 'desktop') ? 'tablet' : 'mobile';
 
   const bgMap = {
-    '01d': `${folder}/01-sunny-home-laundry.webp`,
-    '01n': `${folder}/05-clear-creek-stars.webp`,
-    '02d': `${folder}/03-partly-cloudy-day-field-hiking.webp`,
-    '02n': `${folder}/07-partly-cloudy-night-field-fireflies.webp`,
-    '03d': `${folder}/09-cloudy-hills-coffee.webp`,
-    '03n': `${folder}/09-cloudy-hills-coffee.webp`,
-    '04d': `${folder}/09-cloudy-home-flowers.webp`,
-    '04n': `${folder}/07-partly-cloudy-night-field-fireflies.webp`,
-    '09d': `${folder}/11-rain-creek-leaf.webp`,
-    '09n': `${folder}/11-rain-home-inside.webp`,
-    '10d': `${folder}/11-rain-home-inside.webp`,
-    '10n': `${folder}/11-rain-home-inside.webp`,
-    '11d': `${folder}/22-iso-thunderstorms-home-inside.webp`,
-    '11n': `${folder}/22-iso-thunderstorms-home-inside.webp`,
-    '13d': `${folder}/15-snow-showers-snow-home-shoveling.webp`,
-    '13n': `${folder}/16-blowing-snow-field-snowman.webp`,
-    '50d': `${folder}/26-haze-fog-dust-smoke-bridge.webp`,
-    '50n': `${folder}/26-haze-fog-dust-smoke-mountain.webp`
-  };
+    '01d': `/${folder}/01-sunny-home-laundry.webp`,
+    '01n': `/${folder}/05-clear-creek-stars.webp`,
+    '02d': `/${folder}/03-partly-cloudy-day-field-hiking.webp`,
+    '02n': `/${folder}/07-partly-cloudy-night-field-fireflies.webp`,
+    '03d': `/${folder}/09-cloudy-hills-coffee.webp`,
+    '03n': `/${folder}/09-cloudy-hills-coffee.webp`,
+    '04d': `/${folder}/09-cloudy-home-flowers.webp`,
+    '04n': `/${folder}/07-partly-cloudy-night-field-fireflies.webp`,
+    '09d': `/${folder}/11-rain-creek-leaf.webp`,
+    '09n': `/${folder}/11-rain-home-inside.webp`,
+    '10d': `/${folder}/11-rain-home-inside.webp`,
+    '10n': `/${folder}/11-rain-home-inside.webp`,
+    '11d': `/${folder}/22-iso-thunderstorms-home-inside.webp`,
+    '11n': `/${folder}/22-iso-thunderstorms-home-inside.webp`,
+    '13d': `/${folder}/15-snow-showers-snow-home-shoveling.webp`,
+    '13n': `/${folder}/16-blowing-snow-field-snowman.webp`,
+    '50d': `/${folder}/26-haze-fog-dust-smoke-bridge.webp`,
+    '50n': `/${folder}/26-haze-fog-dust-smoke-mountain.webp`
+  }/;
 
-  return bgMap[iconCode] || `${folder}/default.webp`;
+  return bgMap[iconCode] || `/${folder}/default.webp`;
 }
 
 function relativeTime(timeInMs) {
