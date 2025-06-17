@@ -315,24 +315,31 @@ async function getWeather(city, currentUnitPreference, forceRefresh = false) {
     const aqiRes = await fetch(aqiUrl);
     aqiData = aqiRes.ok ? await aqiRes.json() : null;
 
-  } else {
-    console.log("Using default API key (via Secure Proxy).");
-    const PROXY_URL = '/.netlify/functions/openweather';
-    const geoPath = `/geo/1.0/direct?q=${encodeURIComponent(city)}&limit=1`;
-    const geoResult = await fetchAPI(`${PROXY_URL}?path=${encodeURIComponent(geoPath)}`);
-    if (geoResult.cod || !geoResult.length) throw new Error("City not found");
-    geoData = geoResult; // Store result
-    
-    const { lat, lon } = geoData[0];
-    const weatherPath = `/data/2.5/weather?lat=${lat}&lon=${lon}&units=${unit}`;
-    currentWeather = await fetchAPI(`${PROXY_URL}?path=${encodeURIComponent(weatherPath)}`);
-    const forecastPath = `/data/2.5/forecast?lat=${lat}&lon=${lon}&units=${unit}`;
-    forecast = await fetchAPI(`${PROXY_URL}?path=${encodeURIComponent(forecastPath)}`);
-    
-    const aqiPath = `/data/2.5/air_pollution?lat=${lat}&lon=${lon}`;
-    const aqiRes = await fetch(`${PROXY_URL}?path=${encodeURIComponent(aqiPath)}`);
-    aqiData = aqiRes.ok ? await aqiRes.json() : null;
-  }
+} else {
+  console.log("Using default API key (via Secure Proxy).");
+  const PROXY_URL = '/.netlify/functions/openweather';
+
+  // 1. Geocoding
+  const geoQuery = `q=${encodeURIComponent(city)}&limit=1`;
+  const geoResult = await fetchAPI(`${PROXY_URL}?endpoint=/geo/1.0/direct&query=${geoQuery}`);
+  if (geoResult.cod || !geoResult.length) throw new Error("City not found");
+  geoData = geoResult;
+
+  const { lat, lon } = geoData[0];
+
+  // 2. Current Weather
+  const weatherQuery = `lat=${lat}&lon=${lon}&units=${unit}`;
+  currentWeather = await fetchAPI(`${PROXY_URL}?endpoint=/data/2.5/weather&query=${weatherQuery}`);
+
+  // 3. Forecast
+  const forecastQuery = `lat=${lat}&lon=${lon}&units=${unit}`;
+  forecast = await fetchAPI(`${PROXY_URL}?endpoint=/data/2.5/forecast&query=${forecastQuery}`);
+
+  // 4. AQI
+  const aqiQuery = `lat=${lat}&lon=${lon}`;
+  const aqiRes = await fetch(`${PROXY_URL}?endpoint=/data/2.5/air_pollution&query=${aqiQuery}`);
+  aqiData = aqiRes.ok ? await aqiRes.json() : null;
+}
   const tempSymbol = unit === "metric" ? "C" : "F";
   const windSymbol = unit === "metric" ? "m/s" : "mph";
   const { name: cityName, country } = geoData[0];
@@ -755,8 +762,9 @@ document.getElementById("getLocationBtn").addEventListener("click", () => {
           reverseGeocodeUrl = `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${userApiKey}`;
         } else {
           console.log("Reverse geocoding using default key via proxy.");
-          const path = `/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1`;
-          reverseGeocodeUrl = `/.netlify/functions/openweather?path=${encodeURIComponent(path)}`;
+          const endpoint = '/geo/1.0/reverse';
+          const query = `lat=${lat}&lon=${lon}&limit=1`;
+          reverseGeocodeUrl = `/.netlify/functions/openweather?endpoint=${encodeURIComponent(endpoint)}&query=${encodeURIComponent(query)}`;
         }
         const res = await fetch(reverseGeocodeUrl);
         if (!res.ok) throw new Error("Geocoding failed");
