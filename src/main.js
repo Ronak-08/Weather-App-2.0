@@ -399,11 +399,8 @@ async function showWeather(city, unit, forceRefresh = false) {
     alert("Please enter a city.");
     return;
   }
-  currentCityForRefresh = city.trim();
   currentLastCity = city.trim();
   localStorage.setItem("lastCity", currentLastCity);
-
-
 
   try {
     showLoader();
@@ -575,7 +572,7 @@ water_drop
 
 search.addEventListener("click", async () => {
   const city = citySrc.value.trim();
-  const unit = "metric";
+  const unit = localStorage.getItem("unit") || "metric";
   if (!city) {
     content.innerHTML = `<p class="warning">Please enter a valid city name.</p>`;
     return;
@@ -664,11 +661,11 @@ async function renderSavedCities() {
         const data = await getWeather(city, "metric");
         return {
           city, 
-          icon: data?.icon ? getCustomIcon(data.icon) : 'icons/default.svg',
+          icon: data?.icon ? getCustomIcon(data.icon) : '/icons/default.svg',
           condition: data.condition
         };
       } catch (e) {
-        return { city, icon: 'icons/default.svg' };
+        return { city, icon: '/icons/default.svg' };
       }
     })
   );
@@ -690,7 +687,8 @@ async function renderSavedCities() {
     const span = e.target.closest("span[data-city]");
     if (span) {
       const city = span.dataset.city;
-      showWeather(city, "metric");
+      const unit = localStorage.getItem("unit") || "metric";
+      showWeather(city, unit);
       if (getDeviceType() === "mobile") hideDiv("savedCities");
       citySrc.value = city;
       return;
@@ -753,7 +751,6 @@ document.getElementById("getLocationBtn").addEventListener("click", () => {
       }
     },
     (error) => {
-      // Your error handling code remains the same
       console.error("Geolocation error:", error);
       let msg = "Unknown error";
       switch (error.code) {
@@ -848,7 +845,6 @@ const city = localStorage.getItem("lastCity").toLowerCase() || null;  // or howe
   if (mainTemp) {
     mainTemp.removeAttribute('style');
     mainTemp.classList.add("mMainTemp");
-    // Insert the new element after mainTemp
   }
 
 const currentTemp = document.getElementById("currentTemp");
