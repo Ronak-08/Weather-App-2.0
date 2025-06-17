@@ -4,7 +4,6 @@ const citySrc = document.getElementById("citySrc");
 const search = document.getElementById("search");
 const content = document.getElementById("mainContent");
 const refresh = document.getElementById("refresh");
-const lastCity = localStorage.getItem("lastCity");
 const suggestionsList = document.getElementById("suggestions");
 document.addEventListener("click", (event) => {
   const input = document.getElementById("citySrc");
@@ -169,7 +168,7 @@ function getBackgroundImage(iconCode) {
     '13n': `/${folder}/16-blowing-snow-field-snowman.webp`,
     '50d': `/${folder}/26-haze-fog-dust-smoke-bridge.webp`,
     '50n': `/${folder}/26-haze-fog-dust-smoke-mountain.webp`
-  }/;
+  };
 
   return bgMap[iconCode] || `/${folder}/default.webp`;
 }
@@ -630,18 +629,21 @@ const showSettingsButton = document.getElementById('setting');
   
   if (showSettingsButton) {
     showSettingsButton.addEventListener('click', () => {
-    const settings-div = document.getElementById("settings");
-      showDiv('settings-div');
+      showDiv('settings');
     });
   }
   
   if (savedLocationButton) {
     savedLocationButton.addEventListener('click', () => {
-    const savedLocation = document.getElementById("savedCities");
-      showDiv("savedLocation");
+      showDiv("savedCities");
     });
-
-
+  }
+  let sCity = getSavedCities();
+  if(!lastCity && sCity.length === 0) {
+    showMessage();
+    } else {
+    hideMessage();
+  }
 
 });
 
