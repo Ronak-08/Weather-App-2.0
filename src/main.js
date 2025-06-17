@@ -117,27 +117,27 @@ function formatDurationHHMM(durationMs) {
 
 function getCustomIcon(iconCode) {
   const iconMap = {
-    '01d': './icons/clear_day.svg',
-    '01n': './icons/clear_night.svg',
-    '02d': './icons/partly_cloudy_day.svg',
-    '02n': './icons/partly_cloudy_night.svg',
-    '03d': './icons/cloudy.svg',
-    '03n': './icons/cloudy.svg',
-    '04d': './icons/mostly_cloudy_day.svg',
-    '04n': './icons/mostly_cloudy_night.svg',
-    '09d': './icons/drizzle.svg',
-    '09n': './icons/drizzle.svg',
-    '10d': './icons/rain_with_cloudy_light.svg',
-    '10n': './icons/rain_with_cloudy_dark.svg',
-    '11d': './icons/strong_thunderstorms.svg',
-    '11n': './icons/strong_thunderstorms.svg',
-    '13d': './icons/heavy_snow.svg',
-    '13n': './icons/heavy_snow.svg',
-    '50d': './icons/haze_fog_dust_smoke.svg',
-    '50n': './icons/haze_fog_dust_smoke.svg'
+    '01d': '/icons/clear_day.svg',
+    '01n': '/icons/clear_night.svg',
+    '02d': '/icons/partly_cloudy_day.svg',
+    '02n': '/icons/partly_cloudy_night.svg',
+    '03d': '/icons/cloudy.svg',
+    '03n': '/icons/cloudy.svg',
+    '04d': '/icons/mostly_cloudy_day.svg',
+    '04n': '/icons/mostly_cloudy_night.svg',
+    '09d': '/icons/drizzle.svg',
+    '09n': '/icons/drizzle.svg',
+    '10d': '/icons/rain_with_cloudy_light.svg',
+    '10n': '/icons/rain_with_cloudy_dark.svg',
+    '11d': '/icons/strong_thunderstorms.svg',
+    '11n': '/icons/strong_thunderstorms.svg',
+    '13d': '/icons/heavy_snow.svg',
+    '13n': '/icons/heavy_snow.svg',
+    '50d': '/icons/haze_fog_dust_smoke.svg',
+    '50n': '/icons/haze_fog_dust_smoke.svg'
   };
 
-  return iconMap[iconCode] || './icons/umbrella.svg'; // fallback icon
+  return iconMap[iconCode] || '/icons/umbrella.svg'; // fallback icon
 }
 function getDeviceType() {
   const width = window.innerWidth;
@@ -791,6 +791,23 @@ window.addEventListener("DOMContentLoaded", () => {
   }
   const savedUnit = localStorage.getItem("unit") || "metric";
   document.getElementById("units").value = savedUnit;
+
+const showSettingsButton = document.getElementById('setting');
+  const savedLocationButton = document.getElementById('location');
+  
+  if (showSettingsButton) {
+    showSettingsButton.addEventListener('click', () => {
+    const settings-div = document.getElementById("settings");
+      showDiv('settings-div');
+    });
+  }
+  
+  if (savedLocationButton) {
+    savedLocationButton.addEventListener('click', () => {
+    const savedLocation = document.getElementById("savedCities");
+      showDiv("savedLocation");
+    });
+
 });
 
 function minimal() {
