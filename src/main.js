@@ -321,7 +321,7 @@ async function getWeather(city, currentUnitPreference, forceRefresh = false) {
 
   // 1. Geocoding
   const geoQuery = `q=${encodeURIComponent(city)}&limit=1`;
-  const geoResult = await fetchAPI(`${PROXY_URL}?endpoint=/geo/1.0/direct&query=${geoQuery}`);
+  const geoResult = await fetchAPI(`${PROXY_URL}?endpoint=/geo/1.0/direct&query=${encodeURIComponent(geoQuery)}`);
   if (geoResult.cod || !geoResult.length) throw new Error("City not found");
   geoData = geoResult;
 
@@ -329,15 +329,15 @@ async function getWeather(city, currentUnitPreference, forceRefresh = false) {
 
   // 2. Current Weather
   const weatherQuery = `lat=${lat}&lon=${lon}&units=${unit}`;
-  currentWeather = await fetchAPI(`${PROXY_URL}?endpoint=/data/2.5/weather&query=${weatherQuery}`);
+  currentWeather = await fetchAPI(`${PROXY_URL}?endpoint=/data/2.5/weather&query=${encodeURIComponent(weatherQuery)}`);
 
   // 3. Forecast
   const forecastQuery = `lat=${lat}&lon=${lon}&units=${unit}`;
-  forecast = await fetchAPI(`${PROXY_URL}?endpoint=/data/2.5/forecast&query=${forecastQuery}`);
+  forecast = await fetchAPI(`${PROXY_URL}?endpoint=/data/2.5/forecast&query=${encodeURIComponent(forecastQuery)}`);
 
   // 4. AQI
   const aqiQuery = `lat=${lat}&lon=${lon}`;
-  const aqiRes = await fetch(`${PROXY_URL}?endpoint=/data/2.5/air_pollution&query=${aqiQuery}`);
+  const aqiRes = await fetch(`${PROXY_URL}?endpoint=/data/2.5/air_pollution&query=${encodeURIComponent(aqiQuery)}`);
   aqiData = aqiRes.ok ? await aqiRes.json() : null;
 }
   const tempSymbol = unit === "metric" ? "C" : "F";
