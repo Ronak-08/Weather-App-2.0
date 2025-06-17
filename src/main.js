@@ -282,22 +282,6 @@ function parseDailyData(list, tempUnitSymbol) {
     };
   }).map(d => ({ ...d, tempUnitSymbol }));
 }
-
-document.getElementById("units").addEventListener("change", () => {
-  const selectedUnit = document.getElementById("units").value;
-
-  localStorage.setItem("unit", selectedUnit);
-
-  const cityInput = document.getElementById("citySrc");
-  const currentCity = cityInput.value.trim();
-
-  if (currentCity) {
-    showWeather(currentCity, selectedUnit, true);
-  } else {
-    let lastCity = localStorage.getItem("lastCity");
-    showWeather(lastCity, selectedUnit, true);
-  }
-});
 async function getWeather(city, currentUnitPreference, forceRefresh = false) {
   const unit = currentUnitPreference || localStorage.getItem('unit') || "metric";
   const cacheKey = `owm_weather_${city.toLowerCase()}_${unit}`;
@@ -608,7 +592,24 @@ document.addEventListener("DOMContentLoaded", () => {
     hideLoader();
   }
   renderSavedCities();
+
+
+document.getElementById("units").addEventListener("change", () => {
+  const selectedUnit = document.getElementById("units").value;
+
+  localStorage.setItem("unit", selectedUnit);
+
+  const cityInput = document.getElementById("citySrc");
+  const currentCity = cityInput.value.trim();
+
+  if (currentCity) {
+    showWeather(currentCity, selectedUnit, true);
+  } else {
+    let lastCity = localStorage.getItem("lastCity");
+    showWeather(lastCity, selectedUnit, true);
+  }
 });
+
 
 refresh.addEventListener("click", () => {
   const city = localStorage.getItem("lastCity") || citySrc.value.trim();
@@ -617,9 +618,37 @@ refresh.addEventListener("click", () => {
     showWeather(city, unit, true);
   }
 });
+
+const closeSaved = document.getElementsByClassName("close")[0];
+const close = document.getElementsByClassName("close")[1];
+close.addEventListener('click', () => { hideDiv("settings") })
+closeSaved.addEventListener('click', () => { hideDiv("savedCities") })
+
+
+const showSettingsButton = document.getElementById('setting');
+  const savedLocationButton = document.getElementById('location');
+  
+  if (showSettingsButton) {
+    showSettingsButton.addEventListener('click', () => {
+    const settings-div = document.getElementById("settings");
+      showDiv('settings-div');
+    });
+  }
+  
+  if (savedLocationButton) {
+    savedLocationButton.addEventListener('click', () => {
+    const savedLocation = document.getElementById("savedCities");
+      showDiv("savedLocation");
+    });
+
+
+
+});
+
 setInterval(() => {
-  if (currentLastCity) showWeather(lastCity
-    , true);
+const cityToRefresh = localStorage.getItem("lastCity");
+const unit = localStorage.getItem("unit") || "metric";
+  if (currentLastCity) showWeather(cityToRefresh ,unit, true);
 }, 1 * 60 * 60 * 1000);
 
 function showDiv(div) {
@@ -630,10 +659,6 @@ function hideDiv(div) {
   document.getElementById(div).style.display = "none";
   document.body.classList.remove("no-scroll");
 }
-const closeSaved = document.getElementsByClassName("close")[0];
-const close = document.getElementsByClassName("close")[1];
-close.addEventListener('click', () => { hideDiv("settings") })
-closeSaved.addEventListener('click', () => { hideDiv("savedCities") })
 
 // Load saved cities from localStorage
 function getSavedCities() {
@@ -792,21 +817,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const savedUnit = localStorage.getItem("unit") || "metric";
   document.getElementById("units").value = savedUnit;
 
-const showSettingsButton = document.getElementById('setting');
-  const savedLocationButton = document.getElementById('location');
-  
-  if (showSettingsButton) {
-    showSettingsButton.addEventListener('click', () => {
-    const settings-div = document.getElementById("settings");
-      showDiv('settings-div');
-    });
-  }
-  
-  if (savedLocationButton) {
-    savedLocationButton.addEventListener('click', () => {
-    const savedLocation = document.getElementById("savedCities");
-      showDiv("savedLocation");
-    });
 
 });
 
