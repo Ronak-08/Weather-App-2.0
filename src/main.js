@@ -1,4 +1,15 @@
-import '@material/web/all.js';
+import '@material/web/button/filled-button.js';
+import '@material/web/progress/circular-progress.js';
+import '@material/web/switch/switch.js';
+import '@material/web/textfield/outlined-text-field.js';
+import '@material/web/icon/icon.js'
+import '@material/web/iconbutton/filled-tonal-icon-button.js'
+import '@material/web/ripple/ripple.js';
+import '@material/web/divider/divider.js';
+import '@material/web/menu/menu.js';
+import '@material/web/menu/menu-item.js';
+import '@material/web/menu/sub-menu.js';
+import '@material/web/iconbutton/filled-icon-button.js'
 
 const citySrc = document.getElementById("citySrc");
 const search = document.getElementById("search");
@@ -541,11 +552,23 @@ water_drop
 </div>
 `;
 
-    const currentTempDiv = content.querySelector('#bg');
-    if (currentTempDiv) {
-      currentTempDiv.style.setProperty('--current-temp-bg-image', `url('${getBackgroundImage(data.icon)}')`);
-    }
-    hideMessage();
+const bgDiv = content.querySelector('#bg');
+const imageUrl = getBackgroundImage(data.icon);
+
+if (bgDiv && imageUrl) {
+  const preloadImage = new Image();
+
+  preloadImage.onload = () => {
+    console.log(`Background image loaded: ${imageUrl}`);
+    bgDiv.style.setProperty('--current-temp-bg-image', `url('${imageUrl}')`);
+    
+    bgDiv.classList.add('loaded'); 
+  };
+  preloadImage.src = imageUrl;
+}
+
+hideMessage();
+// ...
           if (localStorage.getItem("minimalMode") === "true") {
   minimalMode.selected = true;
   minimal(); 
@@ -599,6 +622,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   renderSavedCities();
 
+  if(lastCity) {citySrc.value = lastCity};
 
 document.getElementById("units").addEventListener("change", () => {
   const selectedUnit = document.getElementById("units").value;

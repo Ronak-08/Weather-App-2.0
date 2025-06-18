@@ -29,7 +29,7 @@ html {
 
 body {
   line-height: 1.5;
-  background-color: var(--md-sys-color-surface-container);
+  background-color: var(--md-sys-color-surface-container-low);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -343,25 +343,30 @@ h1 {
   margin: var(--space-1);
   margin-top: 1.3rem;
   padding: var(--space-1);
-  min-height: 132px;
+  min-height: 135px;
 }
 
 #bg {
   z-index: -1;
   background-image: var(--current-temp-bg-image);
-  height: 142px;
+  filter: brightness(1.13);
+  height: 140px;
   background-size: cover;
   background-position: center;
   border-radius: inherit;
+  opacity: 0;
+  transition: var(--transition-normal);
 }
-
+#bg.loaded {
+  opacity: 1;
+}
 #currentTemp .info {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   gap: 5px;
-  margin-right: 14px;
+  margin-right: 12px;
 }
 
 .info p {
@@ -381,9 +386,10 @@ h1 {
 }
 
 .mMainTemp {
-  font-size: 6.6rem;
+  font-size: 6.5rem;
   color: var(--md-sys-color-on-surface-variant);
-  font-weight: 600;
+  font-weight: 400;
+  height: 200px;
 }
 
 /* hourly */
@@ -534,22 +540,16 @@ h1 {
 
 .sun-arc-container {
   width: 100%;
-  /* Or a fixed width */
-  max-width: 360px;
-  /* Example max width */
+  max-width: 365px;
   margin: 20px auto;
-  /* Center it */
   position: relative;
   text-align: center;
-  /* For the debug text if you keep it */
 }
 
 .sun-arc-svg {
   width: 100%;
   height: auto;
-  /* Maintain aspect ratio */
   display: block;
-  /* Remove extra space below SVG */
 }
 
 .sun-arc-path {
@@ -558,7 +558,6 @@ h1 {
 
 .sun-icon {
   transition: cx 0.5s ease-out, cy 0.5s ease-out;
-  /* Smooth animation if values update */
 }
 
 .sunData {
@@ -719,7 +718,7 @@ body.no-scroll {
   display: none;
   flex-direction: column;
   top: 0;
-  background-color: var(--md-sys-color-surface-container-low);
+  background-color: var(--md-sys-color-surface-container);
   z-index: 4;
 }
 
@@ -762,15 +761,15 @@ body.no-scroll {
 
 #getLocationBtn {
   position: absolute;
-  bottom: 15px;
-  right: 15px;
+  bottom: 20px;
+  right: 20px;
   background-color: var(--md-sys-color-secondary-container);
   vertical-align: middle;
   color: var(--md-sys-color-primary);
-  padding: var(--space-3);
+  padding: var(--space-4);
   border-radius: var(--radius-md);
   text-align: center;
-  height: 50px;
+  height: 56px;
 }
 
 .wrap {
@@ -1015,5 +1014,10 @@ body.no-scroll {
   }
   .mMainTemp {
     min-height: 220px;
+    font-weight: 500;
+  }
+
+  .sun-arc-container {
+    max-width: 55%;
   }
 }
