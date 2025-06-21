@@ -65,7 +65,7 @@ try {
 });
 
 function showMessage() {
-  const msg = document.getElementById("message"); // or your main weather container
+  const msg = document.getElementById("message"); 
 
   if (msg) msg.style.display = "flex";
   if (content) content.style.display = "none";
