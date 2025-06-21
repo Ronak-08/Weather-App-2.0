@@ -581,7 +581,7 @@ h1 {
 .sunPercent,
 .daylight {
   font-size: 0.93rem;
-  width: 60%;
+  width: 65%;
   padding: var(--space-2);
   border-radius: var(--radius-full);
 }
