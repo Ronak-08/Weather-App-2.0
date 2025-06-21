@@ -12,8 +12,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "@material/web": "^2.3.0",
-    "node-fetch": "^2.7.0"
+    "@material/web": "^2.3.0"
   },
   "devDependencies": {
     "vite": "^6.3.5"
